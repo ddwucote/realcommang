@@ -30,7 +30,7 @@ public class q16918 {
 		}
 		
 		for (int i = 2; i <= N; i++) {
-			if(i % 2 == 1) {
+			if(i % 2 == 1) { //3초 후 폭발
 				for (int k = 0; k < R; k++) {
 					for (int j = 0; j < C; j++) {
 						if(rec[k][j] == 'O') {
