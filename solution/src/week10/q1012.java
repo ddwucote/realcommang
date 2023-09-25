@@ -10,7 +10,7 @@ public class q1012 {
 	static int M, N, K;
 	static int [][] cabbage = new int [51][51]; //양배추 밭
 	static boolean [][] visit = new boolean [51][51];
-	static int bugs; 
+	static int bugs = 0; 
 	 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -31,13 +31,6 @@ public class q1012 {
 			cabbage = new int [M][N];
 			visit = new boolean [M][N];
 			
-			for(int i = 0; i < M; i++) { //초기화
-				for(int j = 0; j < N; j++) {
-					cabbage[i][j] = 0;
-					visit[i][j] = false;
-				}
-			}
-			
 			for(int i = 0; i < K; i++) {//양배추 위치
 				StringTokenizer str = new StringTokenizer(br.readLine());
 				int x = Integer.parseInt(str.nextToken());
@@ -47,8 +40,9 @@ public class q1012 {
 			
 			for(int i = 0; i < M; i++) { //초기화
 				for(int j = 0; j < N; j++) {
-					if(cabbage[i][j] == 1) {
+					if(cabbage[i][j] == 1 && !visit[i][j]) {
 						countBugs(i, j);
+						bugs++;
 					}
 				}
 			}
@@ -65,6 +59,7 @@ public class q1012 {
 	static void countBugs(int i, int j) {	
 		
 		boolean result = true;
+		visit[i][j] = true;
 		
 		for(int k = 0; k < 4; k++) {
 			
@@ -72,21 +67,11 @@ public class q1012 {
 			int y = dy[k] + j;
 			
 			if(x >= 0 && y >= 0 && x < M && y < N) {
-				
-				if(cabbage[x][y] == 1) {
-					if(visit[x][y]) {
-						result = false;
-					}
-					else
-						visit[x][y] = true;
+				if(cabbage[x][y] == 1 && !visit[x][y]) {
+					countBugs(x,y);
 				}
+				
 			}
-		}	
-		
-		visit[i][j] = true;
-		
-		if(result)
-			bugs++;
-		
+		}			
 	}
 }
