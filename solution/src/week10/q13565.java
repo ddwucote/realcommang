@@ -21,22 +21,22 @@ public class q13565 {
 		M = sc.nextInt();
 		N = sc.nextInt();
 		
-		visit = new boolean[N][M];
-		percolate = new int[N][M];
+		visit = new boolean[M][N];
+		percolate = new int[M][N];
 		
-		for(int i = 0; i < N; i++) {
+		for(int i = 0; i < M; i++) {
 			String str = sc.next();
-			for(int j = 0; j < M; j++) {
+			for(int j = 0; j < N; j++) {
 				percolate[i][j] = str.charAt(j) - '0';
 				visit[i][j] = false;
 			}
 		}
 		
-		for(int i = 0; i < M; i++) {
-			if(percolate[0][i] == 0) 
+		for(int i = 0; i < N; i++) {
+			if(percolate[0][i] == 0) //첫째줄
 				reachInner(0, i);
 		}
-
+		
 		if(result)
 			System.out.println("YES");
 		else
@@ -47,7 +47,8 @@ public class q13565 {
 		
 		visit[i][j] = true;
 		
-		if(i == (N-1) && percolate[i][j] == 0) {
+		if(i == (M-1) && percolate[i][j] == 0) {//마지막행
+			//System.out.println("i" + " ,j " + i + " " + j);
 			result = true;
 			return;
 		}
@@ -57,11 +58,9 @@ public class q13565 {
 			int x = dx[k] + i;
 			int y = dy[k] + j;
 			
-			if(x >= 0 && y >= 0 && x < N && y < M) {
-				if(percolate[x][y] == 0 && !visit[x][y]) {					
-					reachInner(x,y);
-				}
-				
+			if(x >= 0 && y >= 0 && x < M && y < N && percolate[x][y] == 0 && !visit[x][y]) {
+				//System.out.println("x" + " ,y " + x + " " + y);
+				reachInner(x,y);
 			}
 		}			
 	}
