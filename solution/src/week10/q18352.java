@@ -57,17 +57,6 @@ public class q18352 {
 			
 			int a = que.poll();
 			
-			/*
-			 * for(int i=0; i< distance.get(a).size();i++) {
-			 * 
-			 * if(distance.get(a).get(i) == 0) { //방문 x
-			 * 
-			 * int nodeInfo = distance.get(a).get(i);
-			 * 
-			 * if(cities.get(nodeInfo) > cities.get(a) + 1) { cities.set(nodeInfo,
-			 * cities.get(a) + 1); que.offer(distance.get(a).get(i)); } } }
-			 */
-			
 			for(int next : distance.get(a)) {
 				if(cities.get(next) > cities.get(a) + 1) {
 					cities.set(next, cities.get(a) + 1);
