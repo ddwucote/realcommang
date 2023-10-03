@@ -37,25 +37,25 @@ public class q14248 {
 	static void stones(int i) {
 		
 		Queue<Integer> que = new LinkedList<>();
-		que.add(i);
+		que.offer(i);
 		visit[i] = true;
 		
 		while(!que.isEmpty()) {
 			
 			int distance = que.poll();
 			
-			if(i - A[distance] >= 0)
-				if(!visit[(i - A[distance])]) {
+			if(distance - A[distance] >= 0)
+				if(!visit[(distance - A[distance])]) {
 					count++;
-					visit[(i - A[distance])] = true;
-					que.offer(i - A[distance]);
+					visit[(distance - A[distance])] = true;
+					que.offer(distance - A[distance]);
 				}
 			
-			if(i + A[distance] < n) 
-				if(!visit[(i + A[distance])]) {
+			if(distance + A[distance] < n) 
+				if(!visit[(distance + A[distance])]) {
 					count++;
-					visit[(i + A[distance])] = true;
-					que.offer(i + A[distance]);
+					visit[(distance + A[distance])] = true;
+					que.offer(distance + A[distance]);
 				}
 			
 		}	
