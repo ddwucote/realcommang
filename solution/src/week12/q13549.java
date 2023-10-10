@@ -9,6 +9,9 @@ public class q13549 {
 	static int time;
 	static boolean [] visit;
 	
+	static int max = 100000;
+	static int min = Integer.MAX_VALUE;
+	
 	public static class Node {
 		
 		int start;
@@ -28,7 +31,9 @@ public class q13549 {
 		N = Integer.parseInt(st.nextToken());
 		K = Integer.parseInt(st.nextToken());
 		
+		visit = new boolean[max+1];
 		bfs(N, K);
+		System.out.println(min);
 		
 	}
 
@@ -41,15 +46,21 @@ public class q13549 {
 		while(!que.isEmpty()) {
 			
 			Node node = que.poll();
+			visit[node.start] = true;
 			
-			if(node.start == end) {
-				System.out.println(node.count);
-				return;
-			}
-						
-			que.add(new Node(node.start * 2, node.count));
-			que.add(new Node(node.start + 1, node.count + 1));
-			que.add(new Node(node.start - 1, node.count + 1));
+			if(node.start == K) min = Math.min(min, node.count);
+			
+			if(node.start * 2 <= max)
+				if(!visit[node.start * 2])
+					que.add(new Node(node.start * 2, node.count));
+			
+			if(node.start + 1 <= max)
+				if(!visit[node.start + 1])
+					que.add(new Node(node.start + 1, node.count + 1));
+			
+			if(node.start - 1 >= 0)
+				if(!visit[node.start - 1])
+					que.add(new Node(node.start - 1, node.count + 1));
 			
 		}	
 	}
