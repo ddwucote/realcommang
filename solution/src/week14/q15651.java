@@ -35,7 +35,7 @@ public class q15651 {
 			return;
 		}
 		
-		for(int i = start; i <= N; i++) {
+		for(int i = 1; i <= N; i++) {
 			array[index] = i;
 			dfs(i + 1, index + 1);
 		}
