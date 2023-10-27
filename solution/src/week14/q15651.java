@@ -1,37 +1,43 @@
 package week14;
 
 import java.util.*;
+import java.io.*;
 
 public class q15651 {
 	
 	static int N, M;
 	static int [] array;
-
-	public static void main(String[] args) {
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		N = sc.nextInt();
-		M = sc.nextInt();
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 		
 		array = new int [M];
 		
-		dfs(0);
+		dfs(1, 0);
+		
+		bw.flush();
+		bw.close();
 	}
 
-	static void dfs(int index) {
+	static void dfs(int start, int index) throws IOException {
 		
 		if(index == M) {
-			for (int arr : array) {
-				System.out.print(arr + " ");
+			for (int i = 0; i < M; i++) {
+				bw.write(array[i] + " ");
 			}
-			System.out.println();
+			bw.newLine();
 			return;
 		}
 		
-		for(int i = 1; i <= N; i++) {
-				array[index] = i;
-				dfs(index+1);
+		for(int i = start; i <= N; i++) {
+			array[index] = i;
+			dfs(i + 1, index + 1);
 		}
 	}
 }
