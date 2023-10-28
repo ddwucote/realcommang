@@ -8,6 +8,7 @@ public class q15656 {
 	static int N, M;
 	static int [] array;
 	static int [] NS; 
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -26,21 +27,24 @@ public class q15656 {
 		Arrays.sort(NS);
 		
 		dfs(0, 0);
+		
+		bw.flush();
+		bw.close();
 	}
 
-	static void dfs(int start, int index) {
+	static void dfs(int start, int index) throws IOException{
 		
 		if(index == M) {
-			for (int arr : array) {
-				System.out.print(arr + " ");
+			for (int i = 0; i < M; i++) {
+				bw.write(array[i] + " ");
 			}
-			System.out.println();
+			bw.newLine();
 			return;
 		}
 		
 		for(int i = 0; i < N; i++) {
 			array[index] = NS[i];
-			dfs(start + 1, index + 1);
+			dfs(i + 1, index + 1);
 		}		
 	}
 }
