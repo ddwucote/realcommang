@@ -11,7 +11,7 @@ public class q15663 {
 	static boolean [] visited;
 	static ArrayList<ArrayList<Integer>> arr = new ArrayList<>();
 	
-	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out), 65536);
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -28,14 +28,6 @@ public class q15663 {
 		for (int i = 0; i < N; i++) {
 			NS[i] = sc.nextInt();
 		}
-		
-		ArrayList<Integer> ar = new ArrayList<Integer>();
-		
-		for (int i = 0; i < M; i++) {
-			ar.add(0);
-		}
-		
-		arr.add(ar);
 		
 		Arrays.sort(NS);
 		
@@ -69,7 +61,7 @@ public class q15663 {
 			if(!visited[i]) {
 				array[index] = NS[i];
 				visited[i] = true;
-				dfs(i + 1, index + 1);
+				dfs(start + 1, index + 1);
 				visited[i] = false;
 			}
 		}		
