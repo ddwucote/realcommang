@@ -6,10 +6,10 @@ import java.io.*;
 public class q15663 {
 	
 	static int N, M;
-	static int N1;
 	static int [] array;
-	static int [] NUMS; 
+	static int [] NS; 
 	static boolean [] visited;
+	static ArrayList<ArrayList<Integer>> arr = new ArrayList<>();
 	
 	static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	
@@ -20,7 +20,7 @@ public class q15663 {
 		N = sc.nextInt();
 		M = sc.nextInt();
 		
-		int [] NS = new int[N];
+		NS = new int[N];
 		
 		array = new int [M];
 		visited = new boolean [N];
@@ -29,32 +29,15 @@ public class q15663 {
 			NS[i] = sc.nextInt();
 		}
 		
-		int count; int sum = 0;
-		for (int i = 0; i < N; i++) {
-			count = 0;
-			for (int j = i; j < N; j++) {
-				if(NS[i] == NS[j]) {
-					count++;
-				}
-			}
-			if(count >= 2) {
-				NS[i] = 10001;
-				sum++;
-			}
+		ArrayList<Integer> ar = new ArrayList<Integer>();
+		
+		for (int i = 0; i < M; i++) {
+			ar.add(0);
 		}
 		
-		NUMS = new int[N - sum];
+		arr.add(ar);
 		
-		int index = 0;
-		for(int i = 0; i < N; i++) {
-			if(NS[i] != 10001) {
-				NUMS[index] = NS[i];
-				index++;
-			}				
-		}
-		
-		N1 = N-sum;
-		Arrays.sort(NUMS);
+		Arrays.sort(NS);
 		
 		dfs(0, 0);
 		
@@ -65,18 +48,28 @@ public class q15663 {
 	static void dfs(int start, int index) throws IOException{
 		
 		if(index == M) {
+			
+			ArrayList<Integer> ar = new ArrayList<>();
+			
 			for (int i = 0; i < M; i++) {
-				bw.write(array[i] + " ");
+				ar.add(array[i]);
 			}
-			bw.newLine();
+			
+			if(!arr.contains(ar)) {
+				for (int i = 0; i < M; i++) {
+					bw.write(array[i] + " ");
+				}
+				arr.add(ar);
+				bw.newLine();
+			}
 			return;
 		}
 		
-		for(int i = 0; i < N1; i++) {
+		for(int i = 0; i < N; i++) {
 			if(!visited[i]) {
-				array[index] = NUMS[i];
+				array[index] = NS[i];
 				visited[i] = true;
-				dfs(start + 1, index + 1);
+				dfs(i + 1, index + 1);
 				visited[i] = false;
 			}
 		}		
