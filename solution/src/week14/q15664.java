@@ -3,7 +3,7 @@ package week14;
 import java.util.*;
 import java.io.*;
 
-public class q15663 {
+public class q15664 {
 	
 	static int N, M;
 	static int [] array;
@@ -38,15 +38,16 @@ public class q15663 {
 
 	static void dfs(int start, int index) throws IOException{
 		
-		if(index == M) {
-			
+		if(index == M) {			
 			ArrayList<Integer> ar = new ArrayList<>();
+			ArrayList<Integer> ar1 = new ArrayList<>();
 			
 			for (int i = 0; i < M; i++) {
 				ar.add(array[i]);
+				ar1.add(array[M-i-1]);
 			}
 			
-			if(!arr.contains(ar)) {
+			if(!arr.contains(ar) && !arr.contains(ar1)) {
 				for (int i = 0; i < M; i++) {
 					bw.write(array[i] + " ");
 				}
@@ -56,7 +57,7 @@ public class q15663 {
 			return;
 		}
 		
-		for(int i = 0; i < N; i++) {
+		for(int i = start; i < N; i++) {
 			if(!visited[i]) {
 				array[index] = NS[i];
 				visited[i] = true;
