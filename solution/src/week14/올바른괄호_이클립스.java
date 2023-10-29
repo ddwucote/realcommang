@@ -3,7 +3,7 @@ package week14;
 import java.util.*;
 import java.io.*;
 
-public class 올바른괄호 {
+public class 올바른괄호_이클립스 {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
