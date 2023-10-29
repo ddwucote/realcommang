@@ -61,7 +61,7 @@ public class q15664 {
 			if(!visited[i]) {
 				array[index] = NS[i];
 				visited[i] = true;
-				dfs(start + 1, index + 1);
+				dfs(i + 1, index + 1);
 				visited[i] = false;
 			}
 		}		
