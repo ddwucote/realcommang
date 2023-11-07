@@ -9,6 +9,7 @@ public class q10971 {
 	static int [][] W;
 	static boolean [] visited;
 	static int N1;
+	static int min = Integer.MAX_VALUE;
 	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -17,7 +18,6 @@ public class q10971 {
 		
 		N = Integer.parseInt(br.readLine());
 		W = new int [N][N];
-		visited = new boolean [N];
 		
 		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
@@ -27,12 +27,12 @@ public class q10971 {
 		}
 		
 		for(int i = 0; i < N; i++) {
-			if(!visited[i]) {
 				N1 = i;
-				dfs(i, 0, 0);
-				visited[i] = true;
-			}
+				visited = new boolean [N];
+				dfs(i, 0, 0);				
 		}
+		
+		System.out.println(min);
 	}
 
 	static void dfs(int start, int count, int sum) {
@@ -41,20 +41,16 @@ public class q10971 {
 		
 		if(count == N-1) {
 			
-			for(int i = 0; i < N; i++) {
-				visited[i] = false;
-			}
-			
-			if(start == N1) {
-				System.out.println(sum + W[start][N1]);
-			}
+			if(W[start][N1] != 0) {
+				min = Math.min(min,  sum + W[start][N1]);
+			}			
 			return;
 		}
 		
 		for(int i = 0; i < N; i++) {
 			if(!visited[i] && (W[start][i] != 0)) {
-				System.out.println(start + " " + i);
 				dfs(i, count+1, sum + W[start][i]);
+				visited[i] = false;
 			}
 		}
 	}
