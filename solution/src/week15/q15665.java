@@ -1,17 +1,22 @@
 package week15;
 
+import java.io.IOException;
 import java.util.*;
 
 public class q15665 {
 
 	static ArrayList<Integer> array = new ArrayList<Integer>();
+	static int N, M;
+	static int [] result;
+	private static StringBuilder sb = new StringBuilder();
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		
-		int N = sc.nextInt();
-		int M = sc.nextInt();
+		N = sc.nextInt();
+		M = sc.nextInt();
+		result = new int[M];
 		
 		for(int i = 0; i < N; i++) {
 			int k = sc.nextInt();	
@@ -24,9 +29,30 @@ public class q15665 {
 		
 		Collections.sort(array);
 		
-		for(int i = 0; i < array.size(); i++) {
-			System.out.println(array.get(i));
+		dfs(0);
+		
+		System.out.println(sb);
+	}
+	
+	static void dfs(int index){
+		
+		if(index == M) {
+			for(int i = 0; i < M; i++) {
+				sb.append(result[i]).append(" ");
+			}
+			sb.append("\n");
+			return;
 		}
+		
+		int prev = -1;
+		for(int i = 0; i < array.size(); i++) {
+			if(prev != array.get(i)) {
+				prev = array.get(i);
+				result[index] = prev;
+				dfs(index+1);
+			}
+		}
+		
 	}
 
 }
