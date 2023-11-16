@@ -9,9 +9,6 @@ public class q14888 {
 	static int [] nums; //수
 	static int [] calc = new int [4]; //연산자 개수
 	
-	static String [] calculators; //연산자 수열
-	static String [] calculator = {"+", "-", "*", "/"};
-	
 	static int max = Integer.MIN_VALUE;
 	static int min = Integer.MAX_VALUE;
 	
@@ -22,7 +19,6 @@ public class q14888 {
 		
 		N = Integer.parseInt(br.readLine());
 		nums = new int [N];
-		calculators = new String [N-1];
 		
 		st = new StringTokenizer(br.readLine(), " ");
 		
@@ -36,69 +32,48 @@ public class q14888 {
 			calc[i] = Integer.parseInt(st.nextToken()); //연산자 개수
 		}		
 		
-		for(int i = 0; i < N-1; i++) {
-			dfs(0, 0);
-		}
+		dfs(nums[0], 1);
 		
 		System.out.println(max);
 		System.out.println(min);
 		
 	}
 	
-	static void dfs (int index, int start) {
+	static void dfs (int sum, int index) {
 		
-		if(index == N-1) {
+		if(index == N) {
 			
-			int sum = nums[0];
-			
-			for (int i = 0; i < N-1; i++) {
-				if(calculators[i] == "+") {
-					sum += nums[i+1];
-				}
-				else if(calculators[i] == "-") {
-					sum -= nums[i+1];
-				}
-				else if(calculators[i] == "*") {
-					sum *= nums[i+1];
-				}
-				else {
-					sum /= nums[i+1];
-				}
-			}
-			
-			if(sum < min)
-				min = sum;
-			
-			if(sum > max)
-				max = sum;
+			max = Math.max(sum, max);
+			min = Math.min(sum, min);
 			
 			return;
 		}
-		
-		for(int j=0; j < N; j++) {
 			
-			for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 4; i++) {
+			
+			if(calc[i] > 0) {
 				
-				if(calc[i] > 0) {
-					
-					calc[i] -= 1;
-					
-					if(calculator[i] == "+") {
-						calculators[index] = "+";
-					}
-					else if(calculator[i] == "-") {
-						calculators[index] = "-";
-					}
-					else if(calculator[i] == "*") {
-						calculators[index] = "*";
-					}
-					else {
-						calculators[index] = "/";
-					}
-					dfs(index+1, start+1);
-				}				
-			}	
-		}
+				calc[i]--;
+				
+				int next = nums[index];
+				
+				if(i==0) {
+					dfs(sum+next, index+1);
+				}
+				else if(i==1) {
+					dfs(sum-next, index+1);
+				}
+				else if(i==2) {
+					dfs(sum*next, index+1);
+				}
+				else if(i==3){
+					dfs(sum/next, index+1);
+				}
+				
+				calc[i]++;
+			}				
+		}	
+		
 	}
 
 }
