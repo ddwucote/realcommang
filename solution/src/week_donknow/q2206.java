@@ -3,6 +3,18 @@ package week_donknow;
 import java.util.*;
 import java.io.*;
 
+class Node {
+    int x, y, distance;
+    boolean wall;
+
+    public Node(int x, int y, int distance, boolean wall) {
+        this.x = x;
+        this.y = y;
+        this.distance = distance;
+        this.wall = wall;
+    }
+}
+
 public class q2206 {
 
 	static int N, M;
@@ -21,8 +33,6 @@ public class q2206 {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		//System.out.println(N + " " + M);
-		
 		map = new int [N][M];
 		visited = new boolean [N][M];
 		
@@ -30,44 +40,45 @@ public class q2206 {
 			String line = br.readLine();
 			for(int j = 0; j < M; j++) {
 				map[i][j] = line.charAt(j) - '0';
-				//System.out.print(map[i][j]);
 			}
-			//System.out.println();
 		}
 		
-		bfs(0, 0, 1, 1);
+		bfs(0, 0);
 		
 		System.out.println(min);
 	}
 	
-	static void bfs(int x, int y, int size, int walls) {
+	static void bfs(int x, int y) {
 		
-		visited[x][y] = true; 
-		 
-		if(x == N-1 && y == M-1) {
-			min = Math.min(size, min);
-			visited[x][y] = false;
-			return;
-		}
-		
-		int j, k;
-		
-		for(int i = 0; i < 4; i++) {
-			
-			j = x + dx[i];
-			k = y + dy[i];
-			
-			if(j >= 0 && k >= 0 && j < N && k < M) {
-				if(map[j][k] == 0 && !visited[j][k])
-					bfs(j, k, size+1, walls);
-				else if(map[j][k] == 1 && !visited[j][k] && walls == 1)
-					bfs(j, k, size+1, 0);
-				else if(map[j][k] == 1 && !visited[j][k] && walls == 0)
-					min = -1;
-			}
-		}
-		
-		visited[x][y] = false;
-	}
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(new Node(x, y, 1, false));
+        
+        visited[x][y] = true;
+        
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            
+            if (node.x == N - 1 && node.y == M - 1) {
+                min = Math.min(node.distance, min);
+                break;
+            }
 
+            for (int i = 0; i < 4; i++) {
+               	
+                int j = node.x + dx[i];
+                int k = node.y + dy[i];
+
+                if (j >= 0 && k >= 0 && j < N && k < M) {
+                    if (map[j][k] == 0 && !visited[j][k]) {
+                        visited[j][k] = true;
+                        queue.add(new Node(j, k, node.distance + 1, node.wall));
+                    } else if (map[j][k] == 1 && node.wall == false && !visited[j][k]) {
+                        visited[j][k] = true;
+                        queue.add(new Node(j, k, node.distance + 1, true));
+                    }
+                }
+            }
+        }
+	}
 }
+
