@@ -6,9 +6,9 @@ import java.io.*;
 public class q16932 {
     static int N, M;
     static int[][] arr;
-    static int[][] component;
-    static int max = 0;
-    static int componentId = 2;
+    static int[][] component; //각 배열 요소가 속하는 모양 id 저장
+    static int max = 0; //최대 모양 크기
+    static int componentId = 2; //현재까지 사용된 연결 요소의 id 추적
     static Map<Integer, Integer> componentSizeMap = new HashMap<>();
 
     static int[] dx = {0, 1, -1, 0};
@@ -33,9 +33,12 @@ public class q16932 {
         // 연결 요소 식별 및 크기 계산
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
+            	//연결요소가 할당되지 않은 1
                 if (arr[i][j] == 1 && component[i][j] == 0) {
+                	//연결요소 크기 저장
                     int size = calculateComponentSize(i, j, componentId);
                     componentSizeMap.put(componentId, size);
+                    //다음 연결 요소->증가
                     componentId++;
                 }
             }
@@ -53,6 +56,7 @@ public class q16932 {
         System.out.println(max);
     }
 
+    //각 연결 요소의 크기를 계산하고 각 요소에 고유한 ID 할당
     static int calculateComponentSize(int x, int y, int id) {
         int size = 1;
         component[x][y] = id;
@@ -75,11 +79,13 @@ public class q16932 {
         return size;
     }
 
+    //최대 모양 크기 계산
     static int calculateMaxShapeSize(int x, int y) {
         Set<Integer> adjacentComponents = new HashSet<>();
         for (int k = 0; k < 4; k++) {
             int nx = x + dx[k];
             int ny = y + dy[k];
+            //어떤 연결 요소에 속해있는지 확인
             if (nx >= 0 && ny >= 0 && nx < N && ny < M && component[nx][ny] != 0) {
                 adjacentComponents.add(component[nx][ny]);
             }
@@ -87,6 +93,7 @@ public class q16932 {
 
         int totalSize = 1; // Including the current cell
         for (int id : adjacentComponents) {
+        	//각 요소의 크기를 더함
             totalSize += componentSizeMap.get(id);
         }
 
